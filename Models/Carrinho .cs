@@ -28,6 +28,7 @@ namespace Aula3108.Models
         public int IdProduto { get; set; }
         public string NomeProduto { get; set; }
         public decimal Quantidade { get; set; }
+        public decimal ValorUnitario { get; set; }
         public decimal ValorTotalProduto { get; set; }
     }
 
@@ -53,15 +54,17 @@ namespace Aula3108.Models
         {
             bool createdNewConnection = false;
 
-            Carrinho carrinho = null;
-
-            string sql = @"select top 1 idCarrinho, dataCriacao from Carrinho where pedidoEfetuado = 0 order by idCarrinho asc;";
-
             if (connection == null)
             {
                 connection = new SqlConnection(_conn);
                 connection.Open();
+
+                createdNewConnection = true;
             }
+
+            Carrinho carrinho = null;
+
+            string sql = @"select top 1 idCarrinho, dataCriacao from Carrinho where pedidoEfetuado = 0 order by idCarrinho asc;";
 
             using (var cmd = new SqlCommand(sql, connection))
             {
@@ -105,9 +108,19 @@ namespace Aula3108.Models
             }
         }
 
-        public static CarrinhoProduto GetCarrinhoProduto(
-            int idCarrinho, int idProduto, SqlConnection connection, SqlTransaction transaction)
+        public static CarrinhoProduto GetProdutoCarrinho(
+            int idCarrinho, int idProduto, SqlConnection connection = null, SqlTransaction transaction = null)
         {
+            bool createdNewConnection = false;
+
+            if (connection == null)
+            {
+                connection = new SqlConnection(_conn);
+                connection.Open();
+
+                createdNewConnection = true;
+            }
+
             CarrinhoProduto carrinhoProduto = null;
 
             string sql = @"select idCarrinho, idProduto, quantidade, vlrUnitarioProduto
@@ -133,6 +146,11 @@ namespace Aula3108.Models
                         };
                     }
                 }
+            }
+
+            if (createdNewConnection)
+            {
+                connection.Close();
             }
 
             return carrinhoProduto;
@@ -196,12 +214,12 @@ namespace Aula3108.Models
                         c = GetCarrinho(cn, dbTransaction);
                     }
 
-                    CarrinhoProduto carrinhoProduto = GetCarrinhoProduto(c.IdCarrinho, idProduto, cn, dbTransaction);
+                    CarrinhoProduto carrinhoProduto = GetProdutoCarrinho(c.IdCarrinho, idProduto, cn, dbTransaction);
 
                     if (carrinhoProduto == null)
                     {
                         CriarCarrinhoProduto(c.IdCarrinho, idProduto, quantidade, vlrUnitarioProduto, cn, dbTransaction);
-                        carrinhoProduto = GetCarrinhoProduto(c.IdCarrinho, idProduto, cn, dbTransaction);
+                        carrinhoProduto = GetProdutoCarrinho(c.IdCarrinho, idProduto, cn, dbTransaction);
                     }
                     else
                     {
@@ -209,6 +227,34 @@ namespace Aula3108.Models
 
                         AlterarCarrinhoProduto(c.IdCarrinho, idProduto, novaQuantidade, vlrUnitarioProduto, cn, dbTransaction);
                     }
+
+                    dbTransaction.Commit();
+                }
+                catch
+                {
+                    dbTransaction.Rollback();
+                    throw;
+                }
+            }
+        }
+
+        public static void AlterarQuantidadeProdutoCarrinho(int idProduto, decimal aumentoDiminuicaoQuantidade, decimal vlrUnitarioProduto)
+        {
+            using (var cn = new SqlConnection(_conn))
+            {
+                cn.Open();
+
+                var dbTransaction = cn.BeginTransaction();
+
+                try
+                {
+                    Carrinho c = GetCarrinho(cn, dbTransaction);
+
+                    CarrinhoProduto carrinhoProduto = GetProdutoCarrinho(c.IdCarrinho, idProduto, cn, dbTransaction);
+
+                    var novaQuantidade = carrinhoProduto.Quantidade + aumentoDiminuicaoQuantidade;
+
+                    AlterarCarrinhoProduto(c.IdCarrinho, idProduto, novaQuantidade, vlrUnitarioProduto, cn, dbTransaction);
 
                     dbTransaction.Commit();
                 }

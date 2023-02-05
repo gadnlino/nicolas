@@ -33,9 +33,9 @@ namespace Aula3108
                );
 
             routes.MapRoute(
-                name:"ProdutosAdd_Loja",
-                url:"Produtos/Add_Produto",
-                new {controller = "Produtos", action = "Add_Produto" }
+                name: "ProdutosAdd_Loja",
+                url: "Produtos/Add_Produto",
+                new { controller = "Produtos", action = "Add_Produto" }
                 );
 
             //CARRINHO
@@ -48,8 +48,20 @@ namespace Aula3108
             routes.MapRoute(
                name: "CarrinhoAddProdutoCarrinho",
                url: "Carrinho/AddProdutoCarrinho",
-               new { controller = "Carrinho", action = "AddProdutoCarrinho" }
+               new { controller = "Carrinho", action = "AddProdutoCarrinho"}
                );
+
+            routes.MapRoute(
+               name: "CarrinhoAumentarQuantidadeProduto",
+               url: "Carrinho/AumentarQuantidadeProduto/{idproduto}",
+               new { controller = "Carrinho", action = "AumentarQuantidadeProduto" }
+               );
+
+            routes.MapRoute(
+              name: "CarrinhoDiminuirQuantidadeProduto",
+              url: "Carrinho/DiminuirQuantidadeProduto/{idproduto}",
+              new { controller = "Carrinho", action = "DiminuirQuantidadeProduto" }
+              );
 
 
             routes.MapRoute(

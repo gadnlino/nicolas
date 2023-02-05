@@ -21,20 +21,30 @@ namespace Aula3108.Controllers
             return View();
         }
 
+        [HttpGet]
+        public void AumentarQuantidadeProduto(int idproduto)
+        {
+            //ViewBag.Title = "Adicionar produtos ao carrinho";
+            var produto = Produtos.GetProduto(idproduto);
+
+            Carrinho.AlterarQuantidadeProdutoCarrinho(idproduto, 1, Convert.ToDecimal(produto.VlrProduto));
+            //ViewBag.Produto = produto;
+            Response.Redirect("/Carrinho/ListaProdutosCarrinho");
+        }
+
+        [HttpGet]
+        public void DiminuirQuantidadeProduto(int idproduto)
+        {
+            //ViewBag.Title = "Adicionar produtos ao carrinho";
+            var produto = Produtos.GetProduto(idproduto);
+            Carrinho.AlterarQuantidadeProdutoCarrinho(idproduto, -1, Convert.ToDecimal(produto.VlrProduto));
+            //ViewBag.Produto = produto;
+            Response.Redirect("/Carrinho/ListaProdutosCarrinho");
+        }
+
         [HttpPost]
         public void AddProdutoCarrinho()
         {
-            //var produto = new Produtos
-            //{
-            //    IdProduto = Convert.ToInt32("0" + Request["idproduto"]),
-            //    NomeProduto = Request["nomeproduto"],
-            //    QuantEstoq = Convert.ToInt16(Request["quantestoq"]),
-            //    VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
-            //    Peso = Convert.ToDouble(Request["peso"]),
-            //};
-
-            //produto.Salvar();
-
             int idProduto = Convert.ToInt32(Request["idproduto"]);
             decimal quantidade = Convert.ToDecimal(Request["quantidade"]);
             decimal valorUnitarioProduto = Convert.ToDecimal(Request["vlrproduto"]);
@@ -72,6 +82,7 @@ namespace Aula3108.Controllers
                         IdProduto = p.IdProduto,
                         NomeProduto = nomeProduto,
                         Quantidade = p.Quantidade,
+                        ValorUnitario = p.VlrUnitarioProduto,
                         ValorTotalProduto = valorTotalProduto
                     };
                 }).ToList()
