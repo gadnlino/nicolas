@@ -14,7 +14,7 @@
         <th>Estoque</th>
         <th>Valor</th>
         <th>Peso</th>
-        <th>Unidade</th>
+        @*<th>Unidade</th>*@
     </tr>
 
     @foreach (var item in ViewBag.Lista)
@@ -24,7 +24,7 @@
             <td>@item.QuantEstoq</td>
             <td>@item.VlrProduto</td>
             <td>@item.Peso</td>
-            <td>@item.Unidade</td>
+            <td>@*@item.Unidade*@</td>
             @*<td>@item.Loja</td>*@
             <td><a href="/Produtos/Alterar_Prod/@item.IdProduto">Alterar</a></td>
             @*<td><a href="/Produtos/Excluir_Prod/@item.IdProduto">Adicionar ao carrinho</a></td>*@

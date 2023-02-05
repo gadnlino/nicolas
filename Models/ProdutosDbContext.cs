@@ -38,9 +38,9 @@ namespace Aula3108.Models
                 .Property(a => a.VlrProduto).HasColumnName("vlrProduto")
                 .HasColumnType("float");
 
-            modelBuilder.Entity<Produtos>()
-               .Property(a => a.Unidade).HasColumnName("unidade")
-               .HasColumnType("int");
+            //modelBuilder.Entity<Produtos>()
+            //   .Property(a => a.Unidade).HasColumnName("unidade")
+            //   .HasColumnType("int");
 
             modelBuilder.Entity<Produtos>()
                 .Property(a => a.Peso).HasColumnName("peso")

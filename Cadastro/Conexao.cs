@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Aula3108.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
@@ -13,15 +14,18 @@ namespace Aula3108.Cadastro
         
         public Conexao()
         {
-			con.ConnectionString = @"Data Source=PC\SQLEXPRESS;
-            Initial Catalog=BD;
-            Integrated Security=True;
-            Connect Timeout=30;
-            Encrypt=False;
-            TrustServerCertificate=False;
-            ApplicationIntent=ReadWrite;
-            MultiSubnetFailover=False";
+			//con.ConnectionString = @"Data Source=PC\SQLEXPRESS;
+   //         Initial Catalog=BD;
+   //         Integrated Security=True;
+   //         Connect Timeout=30;
+   //         Encrypt=False;
+   //         TrustServerCertificate=False;
+   //         ApplicationIntent=ReadWrite;
+   //         MultiSubnetFailover=False";
+
+            con.ConnectionString = DbConnectionString.GetDbConnectionString();
         }
+
         public SqlConnection Conectar() 
         {
             if(con.State == System.Data.ConnectionState.Closed)

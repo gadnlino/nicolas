@@ -1,9 +1,15 @@
+DROP TABLE IF EXISTS "Produto" ;
+DROP TABLE IF EXISTS "Carrinho" ;
+DROP TABLE IF EXISTS "ItemPedido" ;
+DROP TABLE IF EXISTS "Pagamento" ;
+DROP TABLE IF EXISTS "Pedido" ;
+DROP TABLE IF EXISTS "Usuario" ;
+
 CREATE TABLE "Produto" (
     "idProduto"    int NOT NULL IDENTITY,
     "nomeProduto"    varchar (50) NOT NULL,
     "quantEstoq"    int NOT NULL,
     "vlrProduto"    float NOT NULL,
-    "unidade"    int NOT NULL,
     "peso"    float,
     PRIMARY KEY ("idProduto")
 );

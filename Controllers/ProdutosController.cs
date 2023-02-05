@@ -9,7 +9,7 @@ namespace Aula3108.Controllers
 {
     public class ProdutosController : Controller
     {
-		readonly ProdutosDbContext db;
+        readonly ProdutosDbContext db;
         public ProdutosController()
         {
             db = new ProdutosDbContext();
@@ -20,7 +20,7 @@ namespace Aula3108.Controllers
             var produtos = db.Produtos.ToList();
             return View(produtos);
         }
-        
+
         public ActionResult Add_Loja()
         {
             ViewBag.Title = "Produtos";
@@ -58,17 +58,16 @@ namespace Aula3108.Controllers
         [HttpPost]
         public void Salvar()
         {
-			var produto = new Produtos
-			{
-				IdProduto = Convert.ToInt32("0" + Request["idproduto"]),
-				NomeProduto = Request["nomeproduto"],
-				QuantEstoq = Convert.ToInt16(Request["quantestoq"]),
-				VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
-				Unidade = Convert.ToInt16(Request["unidade"]),
-				Peso = Convert.ToDouble(Request["peso"]),
-				//Loja = Request["loja"]
-			};
-			produto.Salvar();
+            var produto = new Produtos
+            {
+                IdProduto = Convert.ToInt32("0" + Request["idproduto"]),
+                NomeProduto = Request["nomeproduto"],
+                QuantEstoq = Convert.ToInt16(Request["quantestoq"]),
+                VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
+                Peso = Convert.ToDouble(Request["peso"]),
+                //Loja = Request["loja"]
+            };
+            produto.Salvar();
             //Response.Redirect("/Home/Produto");
             Response.Redirect("/Produtos/ListaProdutos");
         }
@@ -76,12 +75,17 @@ namespace Aula3108.Controllers
         [HttpPost]
         public void Excluir()
         {
-			var produto = new Produtos
-			{
-				IdProduto = Convert.ToInt32("0" + Request["idproduto"])
-			};
-			produto.Excluir();
-            Response.Redirect("/Home/Produto");
+            //var produto = new Produtos
+            //{
+            //	IdProduto = Convert.ToInt32("0" + Request["idproduto"])
+            //};
+
+            var idProdutoRequest = Request["idproduto"];
+
+            int idProduto = Convert.ToInt32("0" + idProdutoRequest);
+            Produtos.Excluir(idProduto);
+            //Response.Redirect("/Home/Produto");
+            Response.Redirect("/Produtos/ListaProdutos");
         }
     }
 }

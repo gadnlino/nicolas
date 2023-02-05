@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.IO;
+using System.Drawing;
 
 namespace Aula3108.Models
 {
@@ -19,7 +21,9 @@ namespace Aula3108.Models
         //    ApplicationIntent=ReadWrite;
         //    MultiSubnetFailover=False";
 
-        private readonly static string _conn = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=""C:\Users\guiav\Downloads\Aula3108 (0402)_3\Aula3108\App_Data\Database1.mdf"";Integrated Security=True";
+        private readonly static string _conn = DbConnectionString.GetDbConnectionString();
+
+        public Produtos() { }
 
         public int IdProduto { get; set; }
 
@@ -30,25 +34,23 @@ namespace Aula3108.Models
         [Required(ErrorMessage = "Informe o preço do produto", AllowEmptyStrings = false)]
         [DisplayFormat(DataFormatString = "{0:C2}", ApplyFormatInEditMode = true)]
         public double VlrProduto { get; set; }
-        public int Unidade { get; set; }
         public double Peso { get; set; }
 
-        public Produtos() { }
-
-        public Produtos(int idproduto, string nomeproduto, int quantestoq, double vlrproduto, int unidade, double peso)
+        public Produtos(int idproduto, string nomeproduto, int quantestoq, double vlrproduto, double peso)
         {
             IdProduto = idproduto;
             NomeProduto = nomeproduto;
             QuantEstoq = quantestoq;
-            VlrProduto = vlrproduto;
-            Unidade = unidade;
+            VlrProduto = vlrproduto;            
             Peso = peso;
         }
 
         public static List<Produtos> GetProdutos()
         {
             var listaProdutos = new List<Produtos>();
+
             var rSQL = "SELECT * FROM Produto";
+
             try
             {
                 using (var cn = new SqlConnection(_conn))
@@ -66,7 +68,6 @@ namespace Aula3108.Models
                                         dr["nomeProduto"].ToString(),
                                         Convert.ToInt16(dr["quantEstoq"]),
                                         Convert.ToDouble(dr["vlrProduto"]),
-                                        Convert.ToInt16(dr["Unidade"]),
                                         Convert.ToInt16(dr["Peso"])));
                                 }
                         }
@@ -76,6 +77,7 @@ namespace Aula3108.Models
             catch (Exception ex)
             {
                 Console.WriteLine("Falha: " + ex.Message);
+                throw;
             }
             return listaProdutos;
         }
@@ -85,13 +87,13 @@ namespace Aula3108.Models
             string sql;
             if (IdProduto == 0)
             {
-                sql = "INSERT INTO Produto (nomeproduto, quantestoq, vlrproduto, peso, unidade)" +
-                "VALUES(@nomeproduto, @quantestoq, @vlrproduto, @peso, @unidade)";
+                sql = "INSERT INTO Produto (nomeproduto, quantestoq, vlrproduto, peso)" +
+                "VALUES(@nomeproduto, @quantestoq, @vlrproduto, @peso)";
             }
             else
             {
-                sql = "UPDATE Produto set nomeproduto=@nomeproduto, quantestoq=@quantestoq, vlrproduto=@vlrproduto, peso=@peso, unidade=@unidade" +
-                     "WHERE idproduto = " + IdProduto;
+                sql = "UPDATE Produto set nomeproduto=@nomeproduto, quantestoq=@quantestoq, vlrproduto=@vlrproduto, peso=@peso " +
+                     "WHERE idProduto = " + IdProduto;
             }
             try
             {
@@ -103,8 +105,8 @@ namespace Aula3108.Models
                         cmd.Parameters.AddWithValue("@nomeproduto", NomeProduto);
                         cmd.Parameters.AddWithValue("@quantestoq", QuantEstoq);
                         cmd.Parameters.AddWithValue("@vlrproduto", VlrProduto);
-                        cmd.Parameters.AddWithValue("@unidade", Unidade);
                         cmd.Parameters.AddWithValue("@peso", Peso);
+                        //cmd.Parameters.AddWithValue("@unidade", Unidade);
                         //cmd.Parameters.AddWithValue("@loja", Loja);
                         cmd.ExecuteNonQuery();
                     }
@@ -113,12 +115,13 @@ namespace Aula3108.Models
             catch (Exception ex)
             {
                 Console.WriteLine("Falha: " + ex.Message);
+                throw;
             }
         }
 
-        public void Excluir()
+        public static void Excluir(int idproduto)
         {
-            var sql = "DELETE FROM Produto WHERE idproduto = " + IdProduto;
+            var sql = "DELETE FROM Produto WHERE idProduto = " + idproduto;
             try
             {
                 using (var cn = new SqlConnection(_conn))
@@ -133,12 +136,13 @@ namespace Aula3108.Models
             catch (Exception ex)
             {
                 Console.WriteLine("Falha: " + ex.Message);
+                throw;
             }
         }
 
         public static Produtos GetProduto(int idproduto)
         {
-            var sql = "SELECT * FROM Produto WHERE idproduto = " + idproduto;
+            var sql = "SELECT * FROM Produto WHERE idProduto = " + idproduto;
 
             Produtos returnValue = null;
 
@@ -161,7 +165,6 @@ namespace Aula3108.Models
                                         NomeProduto = dr["nomeProduto"].ToString(),
                                         QuantEstoq = Convert.ToInt16(dr["quantEstoq"]),
                                         VlrProduto = Convert.ToDouble(dr["vlrProduto"]),
-                                        Unidade = Convert.ToInt16(dr["Unidade"]),
                                         Peso = Convert.ToInt16(dr["Peso"])
                                     };
                                 }
@@ -173,6 +176,7 @@ namespace Aula3108.Models
             catch (Exception ex)
             {
                 Console.WriteLine("Falha: " + ex.Message);
+                throw;
             }
 
             return returnValue;

@@ -134,6 +134,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\DbConnectionString.cs" />
     <Compile Include="Models\ProdutosDbContext.cs" />
     <Compile Include="Models\Controle.cs" />
     <Compile Include="Models\Produtos.cs" />

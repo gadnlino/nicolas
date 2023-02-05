@@ -53,11 +53,12 @@ namespace Aula3108.Controllers
         [HttpPost]
         public void Excluir()
         {
-			var produto = new Produtos
-			{
-				IdProduto = Convert.ToInt32("0" + Request["idproduto"])
-			};
-			produto.Excluir();
+			//var produto = new Produtos
+			//{
+			//	IdProduto = Convert.ToInt32("0" + Request["idproduto"])
+			//};
+            Produtos.Excluir(Convert.ToInt32("0" + Request["idproduto"]));
+
             Response.Redirect("/Home/Produto");
         }
     }

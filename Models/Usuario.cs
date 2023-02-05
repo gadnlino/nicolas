@@ -10,15 +10,18 @@ namespace Aula3108.Models
 {
     public class Usuario
     {
-        private readonly static string _conn = @"Data Source=(localdb)\SQLSEXPRESS;
-            Initial Catalog=BD;
-            Integrated Security=True;
-            Connect Timeout=30;
-            Encrypt=False;
-            TrustServerCertificate=False;
-            ApplicationIntent=ReadWrite;
-            MultiSubnetFailover=False";
-		internal string nomeProduto;
+        //private readonly static string _conn = @"Data Source=(localdb)\SQLSEXPRESS;
+        //    Initial Catalog=BD;
+        //    Integrated Security=True;
+        //    Connect Timeout=30;
+        //    Encrypt=False;
+        //    TrustServerCertificate=False;
+        //    ApplicationIntent=ReadWrite;
+        //    MultiSubnetFailover=False";
+
+        private readonly static string _conn = DbConnectionString.GetDbConnectionString();
+
+        internal string nomeProduto;
 		internal short quantEstoq;
 		internal double vlrProduto;
 

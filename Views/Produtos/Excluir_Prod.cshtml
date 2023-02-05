@@ -8,29 +8,34 @@
 <form class="row g-3" action="/produtos/excluir" method="post">
 
     <div class="col-12">
+        <label for="idproduto" class="form-label">Id do Produto</label>
+        <input type="text" id="idproduto" name="idproduto" class="form-control" readonly value="@produto.IdProduto" />
+    </div>
+
+    <div class="col-12">
         <label for="nomeproduto" class="form-label">Nome do Produto</label>
-        <input type="text" id="nomeproduto" name="nomeproduto" class="form-control" readonly value="@produto.nomeProduto" />
+        <input type="text" id="nomeproduto" name="nomeproduto" class="form-control" readonly value="@produto.NomeProduto" />
     </div>
 
     <div class="col-12">
         <label for="quantestoq" class="form-label">Estoque</label>
-        <input type="text" id="quantestoq" name="quantestoq" class="form-control" readonly value="@produto.quantEstoq" />
+        <input type="text" id="quantestoq" name="quantestoq" class="form-control" readonly value="@produto.QuantEstoq" />
     </div>
 
     <div class="col-12">
         <label for="vlrproduto" class="form-label">Valor</label>
-        <input type="text" id="vlrproduto" name="vlrproduto" class="form-control" readonly value="@produto.vlrProduto" />
+        <input type="text" id="vlrproduto" name="vlrproduto" class="form-control" readonly value="@produto.VlrProduto" />
     </div>
 
     <div class="col-12">
         <label for="peso" class="form-label">Peso</label>
-        <input type="text" id="peso" name="peso" class="form-control" readonly value="@produto.Peso" />
+        <input type="text" id="peso" name="peso" class="form-control" disabled="@produto.Peso" />
     </div>
 
-    <div class="col-12">
-        <label for="loja" class="form-label">Loja</label>
-        <input type="text" id="loja" name="loja" class="form-control" readonly value="@produto.Loja" />
-    </div>
+    @*<div class="col-12">
+            <label for="loja" class="form-label">Loja</label>
+            <input type="text" id="loja" name="loja" class="form-control" readonly value="@produto.Loja" />
+        </div>*@
     <div>
         <br />
         <button class="btn btn-danger" type="submit"> Excluir</button>
