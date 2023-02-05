@@ -34,6 +34,7 @@ namespace Aula3108.Models
 
     public class RepresentacaoCarrinho
     {
+        public int IdCarrinho { get; set; }
         public decimal ValorTotalCarrinho { get; set; }
         public List<RepresentacaoProdutoCarrinho> ListaProdutos { get; set; }
     }

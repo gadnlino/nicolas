@@ -88,6 +88,7 @@ namespace Aula3108.Controllers
 
             var representacaoCarrinho = new RepresentacaoCarrinho
             {
+                IdCarrinho = carrinho.IdCarrinho,
                 ValorTotalCarrinho = valorTotalCarrinho,
                 ListaProdutos = produtosCarrinho.Select(p =>
                 {

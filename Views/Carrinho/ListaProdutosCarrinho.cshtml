@@ -9,6 +9,10 @@
     <table>
         <tr>
             <td><a class="btn btn-danger btn-lg" href="/Carrinho/EsvaziarCarrinho">Esvaziar carrinho &raquo;</a></td>
+            @if (ViewBag.Carrinho.ListaProdutos.Count > 0)
+            {
+                <td><a class="btn btn-info btn-lg" href="/Pedido/FinalizarPedido/@ViewBag.Carrinho.IdCarrinho">Finalizar pedido &raquo;</a></td>
+            }
         </tr>
     </table>
 
