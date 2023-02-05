@@ -63,6 +63,12 @@ namespace Aula3108
               new { controller = "Carrinho", action = "DiminuirQuantidadeProduto" }
               );
 
+            routes.MapRoute(
+              name: "CarrinhoRemoverProdutoCarrinho",
+              url: "Carrinho/RemoverProdutoCarrinho/{idproduto}",
+              new { controller = "Carrinho", action = "RemoverProdutoCarrinho" }
+              );
+
 
             routes.MapRoute(
                 name: "Default",

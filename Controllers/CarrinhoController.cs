@@ -42,6 +42,15 @@ namespace Aula3108.Controllers
             Response.Redirect("/Carrinho/ListaProdutosCarrinho");
         }
 
+        [HttpGet]
+        public void RemoverProdutoCarrinho(int idproduto)
+        {
+            //ViewBag.Title = "Adicionar produtos ao carrinho";
+            Carrinho.RemoverProdutoCarrinho(idproduto);
+            //ViewBag.Produto = produto;
+            Response.Redirect("/Carrinho/ListaProdutosCarrinho");
+        }
+
         [HttpPost]
         public void AddProdutoCarrinho()
         {

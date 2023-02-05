@@ -300,6 +300,28 @@ namespace Aula3108.Models
             return response;
         }
 
+        public static void RemoverProdutoCarrinho(int idProduto)
+        {
+            var carrinho = GetCarrinho();
+
+            var rSQL = @"DELETE FROM CarrinhoProduto where idCarrinho = @idCarrinho and idProduto = @idProduto;";
+
+            List<CarrinhoProduto> response = new List<CarrinhoProduto>();
+
+            using (var cn = new SqlConnection(_conn))
+            {
+                cn.Open();
+
+                using (var cmd = new SqlCommand(rSQL, cn))
+                {
+                    cmd.Parameters.AddWithValue("@idCarrinho", carrinho.IdCarrinho);
+                    cmd.Parameters.AddWithValue("@idProduto", idProduto);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }            
+        }
+
         public static List<Produtos> GetProdutos()
         {
             var listaProdutos = new List<Produtos>();
