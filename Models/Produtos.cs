@@ -82,6 +82,64 @@ namespace Aula3108.Models
             return listaProdutos;
         }
 
+        public static List<Produtos> GetProdutos(List<int> idProdutos)
+        {
+            var listaProdutos = new List<Produtos>();
+
+            string rSQL = " SELECT idProduto, nomeProduto, quantEstoq,vlrProduto, Peso FROM Produto where ";
+
+            var parameters = new List<SqlParameter>();
+
+            for (int i = 0; i < idProdutos.Count; i++)
+            {
+                rSQL += $" idProduto = @idProduto{i} ";
+
+                if (i == idProdutos.Count - 1)
+                {
+                    rSQL += " ; ";
+                }
+                else
+                {
+                    rSQL += " or ";
+                }
+
+                parameters.Add(new SqlParameter($"@idProduto{i}", idProdutos.ElementAt(i)));
+            }
+
+            try
+            {
+                using (var cn = new SqlConnection(_conn))
+                {
+                    cn.Open();
+
+                    using (var cmd = new SqlCommand(rSQL, cn))
+                    {
+                        cmd.Parameters.AddRange(parameters.ToArray());
+
+                        using (var dr = cmd.ExecuteReader())
+                        {
+                            if (dr.HasRows)
+                                while (dr.Read())
+                                {
+                                    listaProdutos.Add(new Produtos(
+                                        Convert.ToInt32(dr["idProduto"]),
+                                        dr["nomeProduto"].ToString(),
+                                        Convert.ToInt16(dr["quantEstoq"]),
+                                        Convert.ToDouble(dr["vlrProduto"]),
+                                        Convert.ToInt16(dr["Peso"])));
+                                }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Falha: " + ex.Message);
+                throw;
+            }
+            return listaProdutos;
+        }
+
         public void Salvar()
         {
             string sql;

@@ -18,24 +18,24 @@
 <table class="table table-bordered table-hover table-responsive">
     <tr>
         <th>Nome do Produto</th>
-        <th>Quantidade</th>
-        <th>Valor</th>
+        <th>Quantidade no carrinho</th>
+        <th>Valor total do produto</th>
         @*<th>Unidade</th>*@
     </tr>
 
-    @if (ViewBag.Lista.Count == 0)
+    @if (ViewBag.Carrinho.ListaProdutos.Count == 0)
     {
         <tr>
             <td> Não há elementos no carrinho </td>
         </tr>
     }
 
-    @foreach (var item in ViewBag.Lista)
+    @foreach (var item in ViewBag.Carrinho.ListaProdutos)
     {
         <tr>
             <td>@item.NomeProduto</td>
-            <td>@item.QuantEstoq</td>
-            <td>@item.VlrProduto</td>
+            <td>@item.Quantidade</td>
+            <td>@item.ValorTotalProduto</td>
             <td>@*@item.Unidade*@</td>
             @*<td>@item.Loja</td>*@
             <td><a href="/Carrinho/AumentarQuantidadeProduto/@item.IdProduto">+1</a></td>
@@ -46,4 +46,4 @@
     }
 </table>
 
-<p>Use this area to provide additional information.</p>
+<p>Valor total do carrinho: R$ @ViewBag.Carrinho.ValorTotalCarrinho</p>

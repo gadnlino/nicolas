@@ -9,21 +9,75 @@ namespace Aula3108.Controllers
 {
     public class CarrinhoController : Controller
     {
-        public CarrinhoController(){}
+        public CarrinhoController() { }
 
-        public ActionResult Add_Produto()
+        public ActionResult VisualizarAddProdutoCarrinho(int idproduto)
         {
-            ViewBag.Title = "Produtos";
-            ViewBag.Message = "Adicionar produtos a loja";
+            ViewBag.Title = "Adicionar produtos ao carrinho";
+
+            var produto = Produtos.GetProduto(idproduto);
+            //ViewBag.Message = "Adicionar produtos a loja";
+            ViewBag.Produto = produto;
             return View();
+        }
+
+        [HttpPost]
+        public void AddProdutoCarrinho()
+        {
+            //var produto = new Produtos
+            //{
+            //    IdProduto = Convert.ToInt32("0" + Request["idproduto"]),
+            //    NomeProduto = Request["nomeproduto"],
+            //    QuantEstoq = Convert.ToInt16(Request["quantestoq"]),
+            //    VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
+            //    Peso = Convert.ToDouble(Request["peso"]),
+            //};
+
+            //produto.Salvar();
+
+            int idProduto = Convert.ToInt32(Request["idproduto"]);
+            decimal quantidade = Convert.ToDecimal(Request["quantidade"]);
+            decimal valorUnitarioProduto = Convert.ToDecimal(Request["vlrproduto"]);
+            Carrinho.AddProdutoCarrinho(idProduto, quantidade, valorUnitarioProduto);
+            Response.Redirect("/Carrinho/ListaProdutosCarrinho");
         }
 
         public ActionResult ListaProdutosCarrinho()
         {
             ViewBag.Title = "Produtos do carrinho";
             //ViewBag.Message = "Relação de produtos";
-            var lista = Produtos.GetProdutos();
-            ViewBag.Lista = lista;
+            var carrinho = Carrinho.GetCarrinho();
+            var produtosCarrinho = Carrinho.GetProdutosCarrinho(carrinho.IdCarrinho);
+
+            var listaInfosProduto = Produtos.GetProdutos(produtosCarrinho.Select(p => p.IdProduto).ToList());
+
+            decimal valorTotalCarrinho = 0;
+
+            foreach (var produto in produtosCarrinho)
+            {
+                valorTotalCarrinho += produto.Quantidade * produto.VlrUnitarioProduto;
+            }
+
+            var representacaoCarrinho = new RepresentacaoCarrinho
+            {
+                ValorTotalCarrinho = valorTotalCarrinho,
+                ListaProdutos = produtosCarrinho.Select(p =>
+                {
+                    string nomeProduto = listaInfosProduto.Where(pp => pp.IdProduto == p.IdProduto).Select(pp => pp.NomeProduto).First();
+
+                    decimal valorTotalProduto = p.Quantidade * p.VlrUnitarioProduto;
+
+                    return new RepresentacaoProdutoCarrinho
+                    {
+                        IdProduto = p.IdProduto,
+                        NomeProduto = nomeProduto,
+                        Quantidade = p.Quantidade,
+                        ValorTotalProduto = valorTotalProduto
+                    };
+                }).ToList()
+            };
+
+            ViewBag.Carrinho = representacaoCarrinho;
             return View();
         }
 

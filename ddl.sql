@@ -18,14 +18,16 @@ CREATE TABLE "Produto" (
 CREATE TABLE "Carrinho" (
     "idCarrinho"    int NOT NULL IDENTITY,
     "dataCriacao" datetime not null,
+	"pedidoEfetuado" int not null,
     PRIMARY KEY("idCarrinho")
 );
 
 CREATE TABLE "CarrinhoProduto" (
-    "idCarrinho"    int NOT NULL IDENTITY,
+    "idCarrinho"    int NOT NULL,
     "idProduto"    int NOT NULL,
-    "vlrTotal"    float NOT NULL,
-    PRIMARY KEY("idCarrinho")
+	"quantidade" float not null,
+	"vlrUnitarioProduto" float not null,
+    PRIMARY KEY("idCarrinho", "idProduto")
 );
 
 

@@ -13,6 +13,7 @@ namespace Aula3108
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //PRODUTOS
             routes.MapRoute(
                 name: "ProdutosSalvar",
                 url: "Produtos/Salvar",
@@ -36,6 +37,19 @@ namespace Aula3108
                 url:"Produtos/Add_Produto",
                 new {controller = "Produtos", action = "Add_Produto" }
                 );
+
+            //CARRINHO
+            routes.MapRoute(
+               name: "CarrinhoVisualizarAddProdutoCarrinho",
+               url: "Carrinho/VisualizarAddProdutoCarrinho/{idProduto}",
+               new { controller = "Carrinho", action = "VisualizarAddProdutoCarrinho" }
+               );
+
+            routes.MapRoute(
+               name: "CarrinhoAddProdutoCarrinho",
+               url: "Carrinho/AddProdutoCarrinho",
+               new { controller = "Carrinho", action = "AddProdutoCarrinho" }
+               );
 
 
             routes.MapRoute(

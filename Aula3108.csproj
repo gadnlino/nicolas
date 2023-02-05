@@ -226,6 +226,7 @@
     <Content Include="Views\Home\Entrar.cshtml" />
     <Content Include="Views\ListaProdutosCarrinho.cshtml" />
     <Content Include="Views\Carrinho\ListaProdutosCarrinho.cshtml" />
+    <Content Include="Views\Carrinho\VisualizarAddProdutoCarrinho.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

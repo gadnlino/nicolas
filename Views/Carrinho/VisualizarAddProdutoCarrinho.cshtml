@@ -1,0 +1,40 @@
+﻿
+@{ 
+    var produto = ViewBag.produto;
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<form class="row g-3" action="/Carrinho/AddProdutoCarrinho" method="post">
+
+    <div class="col-12">
+        <label for="idproduto" class="form-label">Id do Produto</label>
+        <input type="text" id="idproduto" name="idproduto" class="form-control" readonly value="@produto.IdProduto" />
+    </div>
+
+    <div class="col-12">
+        <label for="nomeproduto" class="form-label">Nome do Produto</label>
+        <input type="text" id="nomeproduto" name="nomeproduto" class="form-control" readonly value="@produto.NomeProduto"/>
+    </div>
+
+    <div class="col-12">
+        <label for="vlrproduto" class="form-label">Valor unitário</label>
+        <input type="text" id="vlrproduto" name="vlrproduto" class="form-control" readonly value="@produto.VlrProduto"/>
+    </div>
+
+    <div class="col-12">
+        <label for="quantidade" class="form-label">Quantidade</label>
+        <input type="number" id="quantidade" name="quantidade" class="form-control" value="1" max="@produto.QuantEstoq" min="1"/>
+    </div>
+
+    @*<div class="col-12">
+            <label for="loja" class="form-label">Loja</label>
+            <input type="text" id="loja" name="loja" class="form-control"/>
+        </div>*@
+
+    <div>
+        <button class="btn btn-info" type="submit"> Adicionar ao carrinho</button>
+    </div>
+
+</form>
