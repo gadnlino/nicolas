@@ -1,0 +1,55 @@
+﻿@{
+    var veiculo = ViewBag.veiculo;
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<form class="row g-3" action="/veiculos/excluir" method="post">
+
+    <div class="col-12">
+        <input type="hidden" id="id" name="id" value="@veiculo.Id"/>
+        <label for="nome" class="form-label">Marca</label>
+        <input type="text" id="nome" name="nome" class="form-control" readonly value="@veiculo.Nome" />
+    </div>
+
+    <div class="col-12">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" id="modelo" name="modelo" class="form-control" readonly value="@veiculo.Modelo" />
+    </div>
+
+    <div class="col-12">
+        <label for="fabricacao" class="form-label">Ano</label>
+        <input type="text" id="fabricacao" name="fabricacao" class="form-control" readonly value="@veiculo.Fabricacao" />
+    </div>
+
+    <div class="col-12">
+        <label for="cor" class="form-label">Cor</label>
+        <input type="text" id="cor" name="cor" class="form-control" readonly value="@veiculo.Cor" />
+    </div>
+
+    <div class="col-12">
+        <label for="combustivel" class="form-label">Combustivel</label>
+        <input type="text" id="combustivel" name="combustivel" class="form-control" readonly value="@veiculo.Combustivel"  />
+    </div>
+
+    <div class="col-12">
+        <label for="automatico" class="form-label">Automatico</label>
+        <input type="text" id="automatico" name="automatico" class="form-control" readonly/>
+    </div>
+
+    <div class="col-12">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="text" id="valor" name="valor" class="form-control" readonly value="@veiculo.Valor" />
+    </div>
+
+    <div class="col-12">
+        <label for="ativo" class="form-label">Ativo</label>
+        <input type="text" id="ativo" name="ativo" class="form-control" readonly />
+    </div>
+    <div>
+        <br />
+        <button class="btn btn-danger" type="submit"> Excluir</button>
+    </div>
+
+</form>

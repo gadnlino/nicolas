@@ -1,0 +1,69 @@
+﻿@{
+    var veiculo = ViewBag.veiculo;
+}
+
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+<form class="row g-3" action="/veiculos/salvar" method="post">
+
+    <div class="col-12">
+        <input type="hidden" id="id" name="id" value="@veiculo.Id"/>
+        <label for="nome" class="form-label">Marca</label>
+        <input type="text" id="nome" name="nome" class="form-control" value="@veiculo.Nome" />
+    </div>
+
+    <div class="col-12">
+        <label for="modelo" class="form-label">Modelo</label>
+        <input type="text" id="modelo" name="modelo" class="form-control" value="@veiculo.Modelo" />
+    </div>
+
+    <div class="col-12">
+        <label for="fabricacao" class="form-label">Ano</label>
+        <input type="text" id="fabricacao" name="fabricacao" class="form-control" value="@veiculo.Fabricacao" />
+    </div>
+
+    <div class="col-12">
+        <label for="cor" class="form-label">Cor</label>
+        <input type="text" id="cor" name="cor" class="form-control" value="@veiculo.Cor" />
+    </div>
+
+    <div class="col-12">
+        <label for="combustivel" class="form-label">Combustivel</label>
+        <select type="text" id="combustivel" name="combustivel" class="form-select" value="@veiculo.Combustivel">
+            <option value="Gasolina">Gasolina</option>
+            <option value="Álcool">Álcool</option>
+            <option value="Flex">Flex</option>
+            <option value="Elétrico">Elétrico</option>
+            <option value="Híbrido">Híbrido</option>
+        </select>
+  
+</div>
+
+    <div class="col-12">
+        <label for="automatico" class="form-label">Automatico</label>
+        <select type="text" id="automatico" name="automatico" class="form-select">
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+            <option value="Semi">Semi</option>
+        </select>
+</div>
+
+    <div class="col-12">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="text" id="valor" name="valor" class="form-control" value="@veiculo.Valor" />
+    </div>
+
+    <div class="col-12">
+        <label for="ativo" class="form-label">Ativo</label>
+        <select type="text" id="ativo" name="ativo" class="form-select">
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
+        </select>
+</div>
+    <div>
+        <br />
+        <button class="btn btn-danger" type="submit"> Salvar</button>
+    </div>
+
+</form>
