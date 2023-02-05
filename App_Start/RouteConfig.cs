@@ -33,8 +33,8 @@ namespace Aula3108
 
             routes.MapRoute(
                 name:"ProdutosAdd_Loja",
-                url:"Produtos/Add_Loja",
-                new {controller = "Produtos", action = "Add_Loja"}
+                url:"Produtos/Add_Produto",
+                new {controller = "Produtos", action = "Add_Produto" }
                 );
 
 

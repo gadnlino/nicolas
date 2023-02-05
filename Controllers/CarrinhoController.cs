@@ -7,9 +7,9 @@ using System.Web.Mvc;
 
 namespace Aula3108.Controllers
 {
-    public class ProdutosController : Controller
+    public class CarrinhoController : Controller
     {
-        public ProdutosController(){}
+        public CarrinhoController(){}
 
         public ActionResult Add_Produto()
         {
@@ -18,9 +18,9 @@ namespace Aula3108.Controllers
             return View();
         }
 
-        public ActionResult ListaProdutos()
+        public ActionResult ListaProdutosCarrinho()
         {
-            ViewBag.Title = "Lista de produtos";
+            ViewBag.Title = "Produtos do carrinho";
             //ViewBag.Message = "Relação de produtos";
             var lista = Produtos.GetProdutos();
             ViewBag.Lista = lista;
@@ -56,9 +56,7 @@ namespace Aula3108.Controllers
                 VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
                 Peso = Convert.ToDouble(Request["peso"]),
             };
-            
             produto.Salvar();
-
             Response.Redirect("/Produtos/ListaProdutos");
         }
 

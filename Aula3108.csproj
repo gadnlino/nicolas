@@ -128,13 +128,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\DbConnectionString.cs" />
+    <Compile Include="Models\Carrinho .cs" />
     <Compile Include="Models\ProdutosDbContext.cs" />
     <Compile Include="Models\Controle.cs" />
     <Compile Include="Models\Produtos.cs" />
@@ -218,11 +219,13 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Produtos\Add_Loja.cshtml" />
+    <Content Include="Views\Produtos\Add_Produto.cshtml" />
     <Content Include="Views\Produtos\Excluir_Prod.cshtml" />
     <Content Include="Views\Produtos\Alterar_Prod.cshtml" />
     <Content Include="Views\Produtos\ListaProdutos.cshtml" />
     <Content Include="Views\Home\Entrar.cshtml" />
+    <Content Include="Views\ListaProdutosCarrinho.cshtml" />
+    <Content Include="Views\Carrinho\ListaProdutosCarrinho.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

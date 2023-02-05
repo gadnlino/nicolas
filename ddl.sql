@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS "Produto" ;
 DROP TABLE IF EXISTS "Carrinho" ;
+DROP TABLE IF EXISTS "CarrinhoProduto" ;
 DROP TABLE IF EXISTS "ItemPedido" ;
 DROP TABLE IF EXISTS "Pagamento" ;
 DROP TABLE IF EXISTS "Pedido" ;
@@ -16,12 +17,17 @@ CREATE TABLE "Produto" (
 
 CREATE TABLE "Carrinho" (
     "idCarrinho"    int NOT NULL IDENTITY,
+    "dataCriacao" datetime not null,
+    PRIMARY KEY("idCarrinho")
+);
+
+CREATE TABLE "CarrinhoProduto" (
+    "idCarrinho"    int NOT NULL IDENTITY,
     "idProduto"    int NOT NULL,
-    "idPedido"    int NOT NULL,
-    "quantidade"    int NOT NULL,
     "vlrTotal"    float NOT NULL,
     PRIMARY KEY("idCarrinho")
 );
+
 
 CREATE TABLE "ItemPedido" (
     "quant"     int NOT NULL,

@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace Aula3108.Models
 {
-    public class Produtos
+    public class Carrinho
     {
         //private readonly static string _conn = @"Data Source=(localdb)\SQLEXPRESS;
         //    Initial Catalog=BD;
@@ -23,7 +23,7 @@ namespace Aula3108.Models
 
         private readonly static string _conn = DbConnectionString.GetDbConnectionString();
 
-        public Produtos() { }
+        public Carrinho() { }
 
         public int IdProduto { get; set; }
 
@@ -36,7 +36,7 @@ namespace Aula3108.Models
         public double VlrProduto { get; set; }
         public double Peso { get; set; }
 
-        public Produtos(int idproduto, string nomeproduto, int quantestoq, double vlrproduto, double peso)
+        public Carrinho(int idproduto, string nomeproduto, int quantestoq, double vlrproduto, double peso)
         {
             IdProduto = idproduto;
             NomeProduto = nomeproduto;

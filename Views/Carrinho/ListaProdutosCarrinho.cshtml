@@ -8,8 +8,7 @@
 <p>
     <table>
         <tr>
-            <td><a class="btn btn-info btn-lg" href="/Produtos/Add_Produto">Adicionar produto &raquo;</a></td>
-            <td><a class="btn btn-warning btn-lg" href="/Carrinho/ListaProdutosCarrinho">Ver carrinho &raquo;</a></td>
+            <td><a class="btn btn-danger btn-lg" href="/Carrinho/ListaProdutosCarrinho">Esvaziar carrinho &raquo;</a></td>
         </tr>
     </table>
 
@@ -19,11 +18,17 @@
 <table class="table table-bordered table-hover table-responsive">
     <tr>
         <th>Nome do Produto</th>
-        <th>Estoque</th>
+        <th>Quantidade</th>
         <th>Valor</th>
-        <th>Peso</th>
         @*<th>Unidade</th>*@
     </tr>
+
+    @if (ViewBag.Lista.Count == 0)
+    {
+        <tr>
+            <td> Não há elementos no carrinho </td>
+        </tr>
+    }
 
     @foreach (var item in ViewBag.Lista)
     {
@@ -31,12 +36,11 @@
             <td>@item.NomeProduto</td>
             <td>@item.QuantEstoq</td>
             <td>@item.VlrProduto</td>
-            <td>@item.Peso</td>
             <td>@*@item.Unidade*@</td>
             @*<td>@item.Loja</td>*@
-            <td><a href="/Produtos/Alterar_Prod/@item.IdProduto">Alterar</a></td>
-            <td><a href="/Produtos/Excluir_Prod/@item.IdProduto">Excluir</a></td>
-            <td><a href="/Carrinho/AdicionarProduto/@item.IdProduto">Adicionar ao carrinho</a></td>
+            <td><a href="/Carrinho/AumentarQuantidadeProduto/@item.IdProduto">+1</a></td>
+            <td><a href="/Carrinho/DiminuirQuantidadeProduto/@item.IdProduto">-1</a></td>
+            <td><a href="/Carrinho/RemoverProdutoCarrinho/@item.IdProduto">Remover do carrinho</a></td>
         </tr>
 
     }
