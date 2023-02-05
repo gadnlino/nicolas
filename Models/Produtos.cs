@@ -86,6 +86,11 @@ namespace Aula3108.Models
         {
             var listaProdutos = new List<Produtos>();
 
+            if(idProdutos.Count == 0)
+            {
+                return listaProdutos;
+            }
+
             string rSQL = " SELECT idProduto, nomeProduto, quantEstoq,vlrProduto, Peso FROM Produto where ";
 
             var parameters = new List<SqlParameter>();
@@ -137,6 +142,7 @@ namespace Aula3108.Models
                 Console.WriteLine("Falha: " + ex.Message);
                 throw;
             }
+
             return listaProdutos;
         }
 
