@@ -28,12 +28,13 @@
             <div class="collapse navbar-collapse" id="mainCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     @*<li class="nav-item">@Html.ActionLink("Página Inicial", "Index", "Home", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Produtos", "Add_Loja", "Produtos", new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Usuários", "Index", "Usuarios", new { @class = "nav-link" })</li>*@
+        <li class="nav-item">@Html.ActionLink("Produtos", "Add_Loja", "Produtos", new { @class = "nav-link" })</li>
+        <li class="nav-item">@Html.ActionLink("Usuários", "Index", "Usuarios", new { @class = "nav-link" })</li>*@
 
                     <li class="nav-item nav-link">@Html.ActionLink("Página Inicial", "Index", "Home")</li>
                     <li class="nav-item nav-link">@Html.ActionLink("Produtos", "ListaProdutos", "Produtos")</li>
                     <li class="nav-item nav-link">@Html.ActionLink("Carrinho", "ListaProdutosCarrinho", "Carrinho")</li>
+                    <li class="nav-item nav-link">@Html.ActionLink("Pedidos", "ListaPedidos", "Pedido")</li>
                 </ul>
             </div>
         </div>

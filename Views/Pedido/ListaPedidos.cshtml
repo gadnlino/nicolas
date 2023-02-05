@@ -1,0 +1,35 @@
+﻿@{
+    //ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title</h2>
+<h3>@ViewBag.Message</h3>
+
+
+@*<p>
+    <table>
+        <tr>
+            <td><a class="btn btn-info btn-lg" href="/Produtos/Add_Produto">Adicionar produto &raquo;</a></td>
+            <td><a class="btn btn-warning btn-lg" href="/Carrinho/ListaProdutosCarrinho">Ver carrinho &raquo;</a></td>
+        </tr>
+    </table>
+
+</p>*@
+<br />
+
+<table class="table table-bordered table-hover table-responsive">
+    <tr>
+        <th>Data do pedido</th>
+        <th>Valor total</th>
+        <th>Quantidade de produtos</th>
+    </tr>
+
+    @foreach (var item in ViewBag.Pedidos)
+    {
+        <tr>
+            <td>@item.DataPedido.ToString("dd/MM/yyyy HH:mm:ss")</td>
+            <td>R$ @item.VlrPedido</td>
+            <td>@item.QuantidadeProdutos</td>
+            <td><a href="/Pedido/VisualizarItensPedido/@item.IdPedido">Ver itens do pedido</a></td>
+        </tr>
+    }
+</table>

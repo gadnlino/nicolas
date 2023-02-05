@@ -48,7 +48,7 @@ namespace Aula3108
             routes.MapRoute(
                name: "CarrinhoAddProdutoCarrinho",
                url: "Carrinho/AddProdutoCarrinho",
-               new { controller = "Carrinho", action = "AddProdutoCarrinho"}
+               new { controller = "Carrinho", action = "AddProdutoCarrinho" }
                );
 
             routes.MapRoute(
@@ -76,7 +76,23 @@ namespace Aula3108
               );
 
             //PEDIDO
+            routes.MapRoute(
+              name: "PedidoFinalizarPedido",
+              url: "Pedido/FinalizarPedido/{idCarrinho}",
+              new { controller = "Pedido", action = "FinalizarPedido", idCarrinho = 0 }
+              );
 
+            routes.MapRoute(
+              name: "PedidoListaPedidos",
+              url: "Pedido/ListaPedidos",
+              new { controller = "Pedido", action = "ListaPedidos" }
+              );
+
+            routes.MapRoute(
+             name: "PedidoVisualizarItensPedido",
+             url: "Pedido/VisualizarItensPedido/{idpedido}",
+             new { controller = "Pedido", action = "VisualizarItensPedido", idpedido = 0 }
+             );
 
             routes.MapRoute(
                 name: "Default",

@@ -12,15 +12,6 @@ namespace Aula3108.Models
 {
     public class Produtos
     {
-        //private readonly static string _conn = @"Data Source=(localdb)\SQLEXPRESS;
-        //    Initial Catalog=BD;
-        //    Integrated Security=True;
-        //    Connect Timeout=30;
-        //    Encrypt=False;
-        //    TrustServerCertificate=False;
-        //    ApplicationIntent=ReadWrite;
-        //    MultiSubnetFailover=False";
-
         private readonly static string _conn = DbConnectionString.GetDbConnectionString();
 
         public Produtos() { }
@@ -244,6 +235,29 @@ namespace Aula3108.Models
             }
 
             return returnValue;
+        }
+
+        public static void ReduzEstoqueProduto(int idproduto, int quantidadeUtilizada, SqlConnection connection, SqlTransaction transaction)
+        {
+            var sql = "update Produto set quantEstoq = (quantEstoq - @quantidadeUtilizada) where idProduto = @idProduto;";
+
+            try
+            {
+                using (var cmd = new SqlCommand(sql, connection))
+                {
+                    cmd.Transaction = transaction;
+
+                    cmd.Parameters.AddWithValue("quantidadeUtilizada", quantidadeUtilizada);
+                    cmd.Parameters.AddWithValue("idProduto", idproduto);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Falha: " + ex.Message);
+                throw;
+            }
         }
     }
 }

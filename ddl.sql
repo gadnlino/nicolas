@@ -1,10 +1,7 @@
 DROP TABLE IF EXISTS "Produto" ;
 DROP TABLE IF EXISTS "Carrinho" ;
 DROP TABLE IF EXISTS "CarrinhoProduto" ;
-DROP TABLE IF EXISTS "ItemPedido" ;
-DROP TABLE IF EXISTS "Pagamento" ;
 DROP TABLE IF EXISTS "Pedido" ;
-DROP TABLE IF EXISTS "Usuario" ;
 
 CREATE TABLE "Produto" (
     "idProduto"    int NOT NULL IDENTITY,
@@ -30,36 +27,11 @@ CREATE TABLE "CarrinhoProduto" (
     PRIMARY KEY("idCarrinho", "idProduto")
 );
 
-
-CREATE TABLE "ItemPedido" (
-    "quant"     int NOT NULL,
-    "vlrUnitario"    float NOT NULL,
-    "vlrTotalItem"    float NOT NULL
-);
-
-CREATE TABLE "Pagamento" (
-    "idPagamento"    int NOT NULL IDENTITY,
-    "dataPagamento"    date NOT NULL,
-    "tipoPagamento"    varchar (50) NOT NULL,
-    "vlrPagamento"    float NOT NULL,
-    PRIMARY KEY("idPagamento")
-);
-
 CREATE TABLE "Pedido" (
     "idPedido"    int NOT NULL IDENTITY,
-    "dataPedido"    date NOT NULL,
+	"idCarrinho" int not null,
+    "dataPedido"    datetime NOT NULL,
     "vlrPedido"    float NOT NULL,
+	"quantidadeProdutos" int not null,
     PRIMARY KEY ("idPedido")
-);
-
-CREATE TABLE "Usuario" (
-    "nome"    varchar (50) NOT NULL,
-    "cpfCnpj"    int NOT NULL,
-    "email"    varchar (50) NOT NULL,
-    "telefone"    int NOT NULL,
-    "idade"    char (2) NOT NULL,
-    "dataNascimento"    date NOT NULL,
-    "login"    varchar (50) NOT NULL,
-    "senha"    varchar (50) NOT NULL,
-    PRIMARY KEY("cpfCnpj")
 );

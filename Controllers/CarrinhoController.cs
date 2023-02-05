@@ -73,85 +73,10 @@ namespace Aula3108.Controllers
         public ActionResult ListaProdutosCarrinho()
         {
             ViewBag.Title = "Produtos do carrinho";
-            //ViewBag.Message = "Relação de produtos";
             var carrinho = Carrinho.GetCarrinho();
-            var produtosCarrinho = Carrinho.GetProdutosCarrinho(carrinho.IdCarrinho);
 
-            var listaInfosProduto = Produtos.GetProdutos(produtosCarrinho.Select(p => p.IdProduto).ToList());
-
-            decimal valorTotalCarrinho = 0;
-
-            foreach (var produto in produtosCarrinho)
-            {
-                valorTotalCarrinho += produto.Quantidade * produto.VlrUnitarioProduto;
-            }
-
-            var representacaoCarrinho = new RepresentacaoCarrinho
-            {
-                IdCarrinho = carrinho.IdCarrinho,
-                ValorTotalCarrinho = valorTotalCarrinho,
-                ListaProdutos = produtosCarrinho.Select(p =>
-                {
-                    string nomeProduto = listaInfosProduto.Where(pp => pp.IdProduto == p.IdProduto).Select(pp => pp.NomeProduto).First();
-
-                    decimal valorTotalProduto = p.Quantidade * p.VlrUnitarioProduto;
-
-                    return new RepresentacaoProdutoCarrinho
-                    {
-                        IdProduto = p.IdProduto,
-                        NomeProduto = nomeProduto,
-                        Quantidade = p.Quantidade,
-                        ValorUnitario = p.VlrUnitarioProduto,
-                        ValorTotalProduto = valorTotalProduto
-                    };
-                }).ToList()
-            };
-
-            ViewBag.Carrinho = representacaoCarrinho;
+            ViewBag.Carrinho = Carrinho.GetRepresentacaoCarrinho(carrinho?.IdCarrinho);
             return View();
-        }
-
-        public ActionResult Alterar_Prod(int idproduto)
-        {
-            ViewBag.Title = "Produtos";
-            ViewBag.Message = "Alterar produtos " + idproduto;
-            var produto = Produtos.GetProduto(idproduto);
-            ViewBag.Produto = produto;
-            return View();
-        }
-
-        public ActionResult Excluir_Prod(int idproduto)
-        {
-            ViewBag.Title = "Produtos";
-            ViewBag.Message = "Excluir produtos " + idproduto;
-            var produto = Produtos.GetProduto(idproduto);
-            ViewBag.Produto = produto;
-            return View();
-        }
-
-        [HttpPost]
-        public void Salvar()
-        {
-            var produto = new Produtos
-            {
-                IdProduto = Convert.ToInt32("0" + Request["idproduto"]),
-                NomeProduto = Request["nomeproduto"],
-                QuantEstoq = Convert.ToInt16(Request["quantestoq"]),
-                VlrProduto = Convert.ToDouble(Request["vlrproduto"]),
-                Peso = Convert.ToDouble(Request["peso"]),
-            };
-            produto.Salvar();
-            Response.Redirect("/Produtos/ListaProdutos");
-        }
-
-        [HttpPost]
-        public void Excluir()
-        {
-            var idProdutoRequest = Request["idproduto"];
-
-            int idProduto = Convert.ToInt32("0" + idProdutoRequest);
-            Produtos.Excluir(idProduto);
-            Response.Redirect("/Produtos/ListaProdutos");
         }
     }
 }

@@ -197,6 +197,24 @@ namespace Aula3108.Models
             }
         }
 
+        public static void FinalizarPedidoCarrinho(SqlConnection connection, SqlTransaction transaction)
+        {
+            var carrinho = GetCarrinho();
+
+            string sql = @"update Carrinho set pedidoEfetuado = @pedidoEfetuado
+                            where idCarrinho = @idCarrinho;";
+
+            using (var cmd = new SqlCommand(sql, connection))
+            {
+                cmd.Transaction = transaction;
+
+                cmd.Parameters.AddWithValue("@idCarrinho", carrinho.IdCarrinho);
+                cmd.Parameters.AddWithValue("@pedidoEfetuado", 1);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public static void AddProdutoCarrinho(int idProduto, decimal quantidade, decimal vlrUnitarioProduto)
         {
             using (var cn = new SqlConnection(_conn))
@@ -320,7 +338,7 @@ namespace Aula3108.Models
 
                     cmd.ExecuteNonQuery();
                 }
-            }            
+            }
         }
 
         public static void EsvaziarCarrinho()
@@ -381,105 +399,50 @@ namespace Aula3108.Models
             return listaProdutos;
         }
 
-        //public void Salvar()
-        //{
-        //    string sql;
+        public static RepresentacaoCarrinho GetRepresentacaoCarrinho(int? idCarrinho)
+        {
+            if (!idCarrinho.HasValue)
+            {
+                return new RepresentacaoCarrinho
+                {
+                    ListaProdutos = new List<RepresentacaoProdutoCarrinho>(),
+                    ValorTotalCarrinho = 0,
+                };
+            }
 
-        //    if (IdProduto == 0)
-        //    {
-        //        sql = "INSERT INTO Produto (nomeproduto, quantestoq, vlrproduto, peso)" +
-        //        "VALUES(@nomeproduto, @quantestoq, @vlrproduto, @peso)";
-        //    }
-        //    else
-        //    {
-        //        sql = "UPDATE Produto set nomeproduto=@nomeproduto, quantestoq=@quantestoq, vlrproduto=@vlrproduto, peso=@peso " +
-        //             "WHERE idProduto = " + IdProduto;
-        //    }
-        //    try
-        //    {
-        //        using (var cn = new SqlConnection(_conn))
-        //        {
-        //            cn.Open();
-        //            using (var cmd = new SqlCommand(sql, cn))
-        //            {
-        //                cmd.Parameters.AddWithValue("@nomeproduto", NomeProduto);
-        //                cmd.Parameters.AddWithValue("@quantestoq", QuantEstoq);
-        //                cmd.Parameters.AddWithValue("@vlrproduto", VlrProduto);
-        //                cmd.Parameters.AddWithValue("@peso", Peso);
-        //                //cmd.Parameters.AddWithValue("@unidade", Unidade);
-        //                //cmd.Parameters.AddWithValue("@loja", Loja);
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Falha: " + ex.Message);
-        //        throw;
-        //    }
-        //}
+            var produtosCarrinho = GetProdutosCarrinho(idCarrinho.Value);
 
-        //public static void Excluir(int idproduto)
-        //{
-        //    var sql = "DELETE FROM Produto WHERE idProduto = " + idproduto;
-        //    try
-        //    {
-        //        using (var cn = new SqlConnection(_conn))
-        //        {
-        //            cn.Open();
-        //            using (var cmd = new SqlCommand(sql, cn))
-        //            {
-        //                cmd.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Falha: " + ex.Message);
-        //        throw;
-        //    }
-        //}
+            var listaInfosProduto = Produtos.GetProdutos(produtosCarrinho.Select(p => p.IdProduto).ToList());
 
-        //public static Produtos GetProduto(int idproduto)
-        //{
-        //    var sql = "SELECT * FROM Produto WHERE idProduto = " + idproduto;
+            decimal valorTotalCarrinho = 0;
 
-        //    Produtos returnValue = null;
+            foreach (var produto in produtosCarrinho)
+            {
+                valorTotalCarrinho += produto.Quantidade * produto.VlrUnitarioProduto;
+            }
 
-        //    try
-        //    {
-        //        using (var cn = new SqlConnection(_conn))
-        //        {
-        //            cn.Open();
-        //            using (var cmd = new SqlCommand(sql, cn))
-        //            {
-        //                using (var dr = cmd.ExecuteReader())
-        //                {
-        //                    if (dr.HasRows)
-        //                    {
-        //                        if (dr.Read())
-        //                        {
-        //                            returnValue = new Produtos
-        //                            {
-        //                                IdProduto = idproduto,
-        //                                NomeProduto = dr["nomeProduto"].ToString(),
-        //                                QuantEstoq = Convert.ToInt16(dr["quantEstoq"]),
-        //                                VlrProduto = Convert.ToDouble(dr["vlrProduto"]),
-        //                                Peso = Convert.ToInt16(dr["Peso"])
-        //                            };
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine("Falha: " + ex.Message);
-        //        throw;
-        //    }
+            var representacaoCarrinho = new RepresentacaoCarrinho
+            {
+                IdCarrinho = idCarrinho.Value,
+                ValorTotalCarrinho = valorTotalCarrinho,
+                ListaProdutos = produtosCarrinho.Select(p =>
+                {
+                    string nomeProduto = listaInfosProduto.Where(pp => pp.IdProduto == p.IdProduto).Select(pp => pp.NomeProduto).First();
 
-        //    return returnValue;
-        //}
+                    decimal valorTotalProduto = p.Quantidade * p.VlrUnitarioProduto;
+
+                    return new RepresentacaoProdutoCarrinho
+                    {
+                        IdProduto = p.IdProduto,
+                        NomeProduto = nomeProduto,
+                        Quantidade = p.Quantidade,
+                        ValorUnitario = p.VlrUnitarioProduto,
+                        ValorTotalProduto = valorTotalProduto
+                    };
+                }).ToList()
+            };
+
+            return representacaoCarrinho;
+        }
     }
 }

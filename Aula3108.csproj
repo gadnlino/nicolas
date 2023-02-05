@@ -127,12 +127,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\ProdutosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\DbConnectionString.cs" />
     <Compile Include="Models\Carrinho .cs" />
@@ -227,6 +229,8 @@
     <Content Include="Views\ListaProdutosCarrinho.cshtml" />
     <Content Include="Views\Carrinho\ListaProdutosCarrinho.cshtml" />
     <Content Include="Views\Carrinho\VisualizarAddProdutoCarrinho.cshtml" />
+    <Content Include="Views\Pedido\ListaPedidos.cshtml" />
+    <Content Include="Views\Pedido\VisualizarItensPedido.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
